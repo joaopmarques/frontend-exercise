@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import { Heading } from "../components/Heading";
+import { Spacer } from "../components/Spacer";
 import { DnaStrands } from "../components/DnaStrands";
 import { DualColumn } from "../components/DualColumn";
 
@@ -15,6 +16,7 @@ const Home: NextPage = () => {
 
       <main className="flex container flex-1 flex-col items-center text-center">
         <Heading />
+        <Spacer />
         <DnaStrands />
         <DualColumn />
       </main>
