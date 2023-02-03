@@ -5,8 +5,9 @@ export const Heading = () => {
         All apps in the world share the same DNA
       </h1>
       <p className="text-md text-silver-200">
-        Think about infrastructure, notifications, social auth. There’s over 70% overlap in functionality.
+        Think about infrastructure, notifications, social auth. There’s over 70%
+        overlap in functionality.
       </p>
     </header>
-  )
-}
+  );
+};

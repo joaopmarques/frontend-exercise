@@ -6,7 +6,7 @@ import { DnaStrands } from "../components/DnaStrands";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex bg-midnight  min-h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-midnight">
       <Head>
         <title>Frontend Exercise</title>
         <link rel="icon" href="/favicon.ico" />
