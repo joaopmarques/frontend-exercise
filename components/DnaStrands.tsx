@@ -10,7 +10,7 @@ import teleHealth from "public/svg/telehealth.svg";
 
 export const DnaStrands = () => {
   return (
-    <section className="flex gap-20 my-20">
+    <section className="flex items-end gap-20 mt-36 mx-20">
       <Image src={bookingTool} alt="Booking Tool" />
       <Image src={carSharing} alt="Car Sharing" />
       <Image src={crmTool} alt="CRM Tool" />
