@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="376" fill="none" viewBox="0 0 120 376">
+  <g class="crm-tool">
+    <rect width="120" height="76" y="300" fill="#45E3BE" class="green" rx="2"/>
+    <rect width="120" height="12" y="56" fill="#2FBDEA" class="blue" opacity=".3" rx="2"/>
+    <rect width="120" height="12" y="168" fill="#2FBDEA" class="blue" opacity=".3" rx="2"/>
+    <rect width="120" height="12" y="192" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+    <rect width="120" height="52" y="100" fill="#8D65FF" class="violet" rx="2"/>
+    <rect width="120" height="56" y="220" fill="#FFBB56" class="orange" rx="2"/>
+    <rect width="120" height="36" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+  </g>
+</svg>

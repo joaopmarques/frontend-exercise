@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="408" fill="none" viewBox="0 0 120 408">
+  <g class="people-os">
+    <rect width="120" height="12" y="396" fill="#45E3BE" class="green" rx="2"/>
+    <rect width="120" height="24" y="160" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+    <rect width="120" height="12" y="284" fill="#2FBDEA" class="blue" opacity=".3" rx="2"/>
+    <rect width="120" height="12" y="200" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+    <rect width="120" height="56" y="316" fill="#FFBB56" class="orange" rx="2"/>
+    <rect width="120" height="36" y="232" fill="#8D65FF" class="violet" rx="2"/>
+    <rect width="120" height="72" y="64" fill="#2FBDEA" class="blue" opacity=".4" rx="2"/>
+    <rect width="120" height="40" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+  </g>
+</svg>

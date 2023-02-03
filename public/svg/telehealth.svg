@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="424" fill="none" viewBox="0 0 120 424">
+  <g class="telehealth">
+    <rect width="120" height="48" y="100" fill="#2FBDEA" class="blue" opacity=".2" rx="2"/>
+    <rect width="120" height="24" y="164" fill="#2FBDEA" class="blue" rx="2"/>
+    <rect width="120" height="80" y="212" fill="#2FBDEA" class="blue" rx="2"/>
+    <rect width="120" height="64" y="316" fill="#FFBB56" class="orange" rx="2"/>
+    <rect width="120" height="24" y="400" fill="#45E3BE" class="green" rx="2"/>
+    <rect width="120" height="12" y="72" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+    <rect width="120" height="48" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+  </g>
+</svg>

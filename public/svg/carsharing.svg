@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="428" fill="none" viewBox="0 0 120 428">
+  <g class="carsharing">
+    <rect width="120" height="56" y="300" fill="#8D65FF" class="violet" rx="2"/>
+    <rect width="120" height="48" y="380" fill="#45E3BE" class="green" rx="2"/>
+    <rect width="120" height="12" y="124" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+    <rect width="120" height="36" y="244" fill="#2FBDEA" class="blue" opacity=".4" rx="2"/>
+    <rect width="120" height="20" y="156" fill="#2FBDEA" class="blue" opacity=".3" rx="2"/>
+    <rect width="120" height="36" y="188" fill="#FFBB56" class="orange" rx="2"/>
+    <rect width="120" height="104" fill="#2FBDEA" class="blue" opacity=".8" rx="2"/>
+  </g>
+</svg>
