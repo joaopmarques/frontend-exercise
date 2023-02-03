@@ -1,4 +1,4 @@
-import { FC, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 import { getScrollPercentage } from "../utils/helpers";
@@ -12,18 +12,25 @@ import socialPlatform from "public/svg/social-platform.svg";
 import teleHealth from "public/svg/telehealth.svg";
 
 export const DnaStrands = () => {
+  const [dnaInteraction, setDnaInteraction] = useState<boolean>(false);
+  const percentageScrolledRef = useRef<number>(0);
   const strandsRef = useRef<HTMLDivElement>(null);
   let strands = strandsRef.current?.children;
 
   const handleScroll = () => {
+    /* Calculate scroll percentage */
+    percentageScrolledRef.current = getScrollPercentage();
     
+    /* Iterate through each strand and calculate offsets according to scroll position */
     if (strands) {
-      Array.from(strands).forEach((strand, index) => {
-        // Set each strand translateY property to a normalized value - the closer to getScrollPercentage equaling 100, the more the offset is applied
+      Array.from(strands).forEach((strand: any) => {
+        // Set each strand translateY property to a normalized value - the closer to percentageScrolledRef equaling 100, the more the offset is applied
         strand.style.transform = `translateY(${(100 - getScrollPercentage()) * strand.dataset.offset / 100}%)`
       })
     }
 
+    /* Enable DNA interaction when scrolling animation is done */
+    percentageScrolledRef.current > 99 ? setDnaInteraction(true) : setDnaInteraction(false);
   }
   
   useEffect(() => {
@@ -43,6 +50,10 @@ export const DnaStrands = () => {
         <Image data-offset='29' className="socialPlatform" src={socialPlatform} alt="Social Platform" />
         <Image data-offset='-13' className="carSharing" src={carSharing} alt="Car Sharing" />
       </div>
+      {dnaInteraction && (
+        <div className="absolute bottom-0 left-0 w-full h-full flex justify-center items-center pointer-events-none">
+        </div>
+      )}
     </section>
   );
 };
