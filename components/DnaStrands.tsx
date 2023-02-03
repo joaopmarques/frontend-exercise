@@ -10,14 +10,16 @@ import teleHealth from "public/svg/telehealth.svg";
 
 export const DnaStrands = () => {
   return (
-    <section className="flex items-end gap-20 mt-36 mx-20">
-      <Image src={bookingTool} alt="Booking Tool" />
-      <Image src={carSharing} alt="Car Sharing" />
-      <Image src={crmTool} alt="CRM Tool" />
-      <Image src={foodDelivery} alt="Food Delivery" />
-      <Image src={peopleOs} alt="People OS" />
-      <Image src={socialPlatform} alt="Social Platform" />
-      <Image src={teleHealth} alt="Telehealth" />
+    <section className="container mt-36">
+      <div className="flex justify-between items-end">
+        <Image src={bookingTool} alt="Booking Tool" />
+        <Image src={carSharing} alt="Car Sharing" />
+        <Image src={crmTool} alt="CRM Tool" />
+        <Image src={foodDelivery} alt="Food Delivery" />
+        <Image src={peopleOs} alt="People OS" />
+        <Image src={socialPlatform} alt="Social Platform" />
+        <Image src={teleHealth} alt="Telehealth" />
+      </div>
     </section>
   );
 };
