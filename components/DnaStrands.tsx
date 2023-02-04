@@ -199,11 +199,22 @@ const Strand: FC<StrandProps> = (props) => {
 const StrandDescription: FC<StrandDescriptionProps> = (props) => {
   const { classes, descriptionText, color } = props;
 
+  /**
+   * Extract colors beforehand so Tailwind can generate proper CSS.
+   * Explanation: https://tailwindcss.com/docs/content-configuration#dynamic-class-names
+   */
+  const colorVariants: any = {
+    orange: 'text-orange',
+    green: 'text-green',
+    blue: 'text-blue',
+    violet: 'text-violet',
+  }
+
   return (
     <span
       data-strand-color={color}
       className={`strand-descriptor absolute font-roboto text-xs tracking-tight transition-opacity
-        pointer-events-none text-${color} ${classes} opacity-0`}
+        pointer-events-none ${colorVariants[color]} ${classes} opacity-0`}
     >
       {descriptionText}
     </span>
