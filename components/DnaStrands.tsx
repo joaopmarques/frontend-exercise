@@ -11,16 +11,29 @@ import peopleOs from "public/svg/people-os.svg";
 import socialPlatform from "public/svg/social-platform.svg";
 import teleHealth from "public/svg/telehealth.svg";
 
+interface DnaInfoProps {
+  top?: { text: string, color: string };
+  bottom?: { text: string, color: string };
+}
+
+interface StrandDescriptionProps {
+  descriptionText: string;
+  color: string;
+  classes?: string;
+}
+
 interface StrandProps {
   functionalArea: string;
   src: string;
   offset?: string;
+  dnaInfo?: DnaInfoProps
 }
 
 export const DnaStrands = () => {
   const scrollPercentage = useRef<number>(0);
   const [dnaInteraction, setDnaInteraction] = useState<boolean>(false);
   const strandsRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
     scrollPercentage.current = getScrollPercentage();
@@ -50,13 +63,31 @@ export const DnaStrands = () => {
 
   return (
     <>
-      <section className="relative container">
+      <section ref={containerRef} className="relative container">
         <div ref={strandsRef} className="flex justify-between items-end">
-          <Strand offset='3' functionalArea="CRM Tool" src={crmTool} />
+          <Strand offset='3'
+          functionalArea="CRM Tool"
+          src={crmTool}
+          dnaInfo={{
+            top: { text: "User Interface", color: "orange" }
+          }} />
           <Strand offset='-11' functionalArea="People OS" src={peopleOs} />
-          <Strand offset='24' functionalArea="Booking Tool" src={bookingTool} />
+          <Strand offset='24'
+          functionalArea="Booking Tool"
+          src={bookingTool}
+          dnaInfo={{
+            bottom: { text: "Infrastructure", color: "green" }
+          }} />
           <Strand offset='7' functionalArea="Telehealth" src={teleHealth} />
-          <Strand offset='-10' functionalArea="Food Delivery" src={foodDelivery} />
+          <Strand
+            offset='-10'
+            functionalArea="Food Delivery"
+            src={foodDelivery}
+            dnaInfo={{
+              top: { text: "Basic Features", color: "blue"},
+              bottom: { text: "3rd party stuff", color: "purple" }
+            }}
+          />
           <Strand offset='29' functionalArea="Social Platform" src={socialPlatform} />
           <Strand offset='-13' functionalArea="Carsharing" src={carSharing} />
         </div>
@@ -69,14 +100,40 @@ export const DnaStrands = () => {
 };
 
 const Strand: FC<StrandProps> = (props) => {
-  const { functionalArea, src, offset } = props;
+  const { functionalArea, src, offset, dnaInfo } = props;
 
   return (
     <div className={`relative flex flex-col items-start`} data-offset={offset}>
-      <Image className="z-10" style={{ transform: `translateY(${offset}%)` }} src={src} alt={functionalArea} />
+      <div className="flex flex-col items-start" style={{ transform: `translateY(${offset}%)` }}>
+        {dnaInfo && dnaInfo.top && (
+          <StrandDescription
+            classes="-top-12"
+            descriptionText={dnaInfo.top.text}
+            color={dnaInfo.top.color}
+          />
+        )}
+        <Image className="z-10" src={src} alt={functionalArea} />
+        {dnaInfo && dnaInfo.bottom && (
+          <StrandDescription
+            classes="-bottom-12"
+            descriptionText={dnaInfo.bottom.text}
+            color={dnaInfo.bottom.color}
+          />
+        )}
+      </div>
       <span className="z-0 absolute mt-6 -bottom-12 font-roboto text-xs text-silver-300 tracking-tight">
         {functionalArea}
       </span>
     </div>
   );
 };
+
+const StrandDescription: FC<StrandDescriptionProps> = (props) => {
+  const { classes, descriptionText, color } = props;
+
+  return (
+    <span className={`absolute font-roboto text-xs tracking-tight text-${color} ${classes}`}>
+      {descriptionText}
+    </span>
+  )
+}
