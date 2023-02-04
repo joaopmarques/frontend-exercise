@@ -126,6 +126,9 @@ export const DnaStrands: FC<DnaStrandsProps> = (props) => {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("mouseover", handleOpacity);
 
+    /* Prevents a known strand positioning issue by moving to the top before reloading */
+    window.onbeforeunload = () => window.scrollTo(0, 0);
+
     return () => {
       strandsRef?.current?.removeEventListener("mouseover", handleOpacity);
       window.removeEventListener("scroll", handleScroll);
@@ -136,11 +139,11 @@ export const DnaStrands: FC<DnaStrandsProps> = (props) => {
     <>
       <section className="relative container group/section">
         <div ref={strandsRef} className="flex justify-between items-end">
-          {data && data.length > 0 && (
+          {data &&
+            data.length > 0 &&
             data.map((strand: StrandProps, index: number) => {
-              return <Strand {...strand} key={`dna-strand-${index}`} />
-            })
-          )}
+              return <Strand {...strand} key={`dna-strand-${index}`} />;
+            })}
         </div>
       </section>
       {!dnaInteraction && (
