@@ -17,7 +17,6 @@ interface StrandProps {
   offset?: string;
 }
 
-
 export const DnaStrands = () => {
   const scrollPercentage = useRef<number>(0);
   const [dnaInteraction, setDnaInteraction] = useState<boolean>(false);
@@ -29,8 +28,13 @@ export const DnaStrands = () => {
     /* Iterate through each strand and calculate offsets according to scroll position */
     if (strandsRef.current?.children) {
       Array.from(strandsRef.current.children).forEach((strand: any) => {
-        // Set each strand translateY property to a normalized value - the closer to percentageScrolledRef equaling 100, the more the offset is applied
-        strand.style.transform = `translateY(${(100 - scrollPercentage.current) * strand.dataset.offset / 100}%)`
+        /**
+         * Set each strand's image translateY property to a normalized value:
+         * the closer to percentageScrolledRef equaling 100, the more the offset is applied
+         *  */ 
+        strand.children[0].style.transform = `
+          translateY(${(100 - scrollPercentage.current) * strand.dataset.offset / 100}%)
+        `
       })
     }
 
@@ -68,9 +72,11 @@ const Strand: FC<StrandProps> = (props) => {
   const { functionalArea, src, offset } = props;
 
   return (
-    <div className={`relative flex flex-col items-start`} data-offset={offset} style={{ transform: `translateY(${offset}%)` }}>
-      <Image src={src} alt={functionalArea} />
-      <span className="absolute mt-6 -bottom-12 font-roboto text-xs text-silver-300 tracking-tight">{functionalArea}</span>
+    <div className={`relative flex flex-col items-start`} data-offset={offset}>
+      <Image className="z-10" style={{ transform: `translateY(${offset}%)` }} src={src} alt={functionalArea} />
+      <span className="z-0 absolute mt-6 -bottom-12 font-roboto text-xs text-silver-300 tracking-tight">
+        {functionalArea}
+      </span>
     </div>
   );
 };
