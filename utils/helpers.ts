@@ -6,7 +6,7 @@ import { useRef, useMemo } from "react";
 */
 
 
-export const getScrollPercentage = () => {
+export const getScrollPercentage = (): number => {
   const h = document.documentElement,
     b = document.body,
     st = "scrollTop",

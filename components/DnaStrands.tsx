@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { FC, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 import { getScrollPercentage } from "../utils/helpers";
@@ -11,26 +11,39 @@ import peopleOs from "public/svg/people-os.svg";
 import socialPlatform from "public/svg/social-platform.svg";
 import teleHealth from "public/svg/telehealth.svg";
 
+interface StrandProps {
+  src: string;
+  alt: string;
+  className?: string;
+  offset?: string;
+}
+
+export const Strand: FC<StrandProps> = ({ src, alt, className, offset }) => {
+  return (
+    <div className={`relative ${className}`} data-offset={offset} style={{ transform: `translateY(${offset}%)` }}>
+      <Image src={src} alt={alt} />
+    </div>
+  );
+};
+
 export const DnaStrands = () => {
   const [dnaInteraction, setDnaInteraction] = useState<boolean>(false);
-  const percentageScrolledRef = useRef<number>(0);
+  const scrollPercentage = useRef<number>(0);
   const strandsRef = useRef<HTMLDivElement>(null);
-  let strands = strandsRef.current?.children;
-
+  
   const handleScroll = () => {
-    /* Calculate scroll percentage */
-    percentageScrolledRef.current = getScrollPercentage();
-    
+    scrollPercentage.current = getScrollPercentage();
+
     /* Iterate through each strand and calculate offsets according to scroll position */
-    if (strands) {
-      Array.from(strands).forEach((strand: any) => {
+    if (strandsRef.current?.children) {
+      Array.from(strandsRef.current.children).forEach((strand: any) => {
         // Set each strand translateY property to a normalized value - the closer to percentageScrolledRef equaling 100, the more the offset is applied
-        strand.style.transform = `translateY(${(100 - getScrollPercentage()) * strand.dataset.offset / 100}%)`
+        strand.style.transform = `translateY(${(100 - scrollPercentage.current) * strand.dataset.offset / 100}%)`
       })
     }
 
     /* Enable DNA interaction when scrolling animation is done */
-    percentageScrolledRef.current > 99 ? setDnaInteraction(true) : setDnaInteraction(false);
+    scrollPercentage.current > 99 ? setDnaInteraction(true) : setDnaInteraction(false);
   }
   
   useEffect(() => {
@@ -42,16 +55,17 @@ export const DnaStrands = () => {
   return (
     <section className="relative container">
       <div ref={strandsRef} className="flex justify-between items-end">
-        <Image data-offset='3' className="crmTool" src={crmTool} alt="CRM Tool" />
-        <Image data-offset='-11' className="peopleOs" src={peopleOs} alt="People OS" />
-        <Image data-offset='24' className="bookingTool" src={bookingTool} alt="Booking Tool" />
-        <Image data-offset='7' className="teleHealth" src={teleHealth} alt="Telehealth" />
-        <Image data-offset='-10' className="foodDelivery" src={foodDelivery} alt="Food Delivery" />
-        <Image data-offset='29' className="socialPlatform" src={socialPlatform} alt="Social Platform" />
-        <Image data-offset='-13' className="carSharing" src={carSharing} alt="Car Sharing" />
+        <Strand offset='3' className="crmTool" src={crmTool} alt="CRM Tool" />
+        <Strand offset='-11' className="peopleOs" src={peopleOs} alt="People OS" />
+        <Strand offset='24' className="bookingTool" src={bookingTool} alt="Booking Tool" />
+        <Strand offset='7' className="teleHealth" src={teleHealth} alt="Telehealth" />
+        <Strand offset='-10' className="foodDelivery" src={foodDelivery} alt="Food Delivery" />
+        <Strand offset='29' className="socialPlatform" src={socialPlatform} alt="Social Platform" />
+        <Strand offset='-13' className="carSharing" src={carSharing} alt="Car Sharing" />
       </div>
       {dnaInteraction && (
         <div className="absolute bottom-0 left-0 w-full h-full flex justify-center items-center pointer-events-none">
+          dna interaction here
         </div>
       )}
     </section>
