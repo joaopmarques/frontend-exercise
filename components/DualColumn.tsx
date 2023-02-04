@@ -1,7 +1,6 @@
 import { useRef, useEffect } from "react";
 
 export const DualColumn = () => {
-
   /**
    * Use an intersection observer to fade in the section when it's in view
    */
@@ -11,7 +10,8 @@ export const DualColumn = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+      entries.forEach(
+        (entry) => {
           if (sectionRef.current) {
             if (entry.isIntersecting) {
               sectionRef.current.classList.remove("opacity-0");
@@ -21,12 +21,14 @@ export const DualColumn = () => {
               sectionRef.current.classList.add("opacity-0");
             }
           }
-        }, { threshold: 0.2 });
-      });
-      
-      if (intersectorRef.current) {
-        observer.observe(intersectorRef.current);
-      }
+        },
+        { threshold: 0.2 }
+      );
+    });
+
+    if (intersectorRef.current) {
+      observer.observe(intersectorRef.current);
+    }
   }, []);
 
   return (
@@ -37,11 +39,14 @@ export const DualColumn = () => {
         </div>
         <div className="w-1/2 text-left text-sm text-silver-200">
           Instead, focus on what makes your app unique. We did the heavy lifting
-          for you already. Just plug into our pre-made feature-suite and kickstart
-          your project.
+          for you already. Just plug into our pre-made feature-suite and
+          kickstart your project.
         </div>
       </div>
-      <span ref={intersectorRef} className="absolute bottom-32 pointer-events-none" />
+      <span
+        ref={intersectorRef}
+        className="absolute bottom-32 pointer-events-none"
+      />
     </section>
   );
 };
