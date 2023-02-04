@@ -33,8 +33,10 @@ export const DnaStrands = () => {
   const scrollPercentage = useRef<number>(0);
   const [dnaInteraction, setDnaInteraction] = useState<boolean>(false);
   const strandsRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Handle scroll events on the page and set scroll percentage
+   */
   const handleScroll = () => {
     scrollPercentage.current = getScrollPercentage();
 
@@ -57,13 +59,12 @@ export const DnaStrands = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
-    return () => { window.removeEventListener("scroll", handleScroll) };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <section ref={containerRef} className="relative container">
+      <section className="relative container group/section">
         <div ref={strandsRef} className="flex justify-between items-end">
           <Strand offset='3'
           functionalArea="CRM Tool"
@@ -93,7 +94,7 @@ export const DnaStrands = () => {
         </div>
       </section>
       {!dnaInteraction && (
-        <div className="fixed bottom-0 left-0 w-full h-full flex justify-center items-center" />
+        <div className="z-20 fixed bottom-0 left-0 w-full h-full flex justify-center items-center" />
       )}
     </>
   );
@@ -103,25 +104,28 @@ const Strand: FC<StrandProps> = (props) => {
   const { functionalArea, src, offset, dnaInfo } = props;
 
   return (
-    <div className={`relative flex flex-col items-start`} data-offset={offset}>
-      <div className="flex flex-col items-start" style={{ transform: `translateY(${offset}%)` }}>
+    <div className={`relative flex flex-col items-start group/strand`} data-offset={offset}>
+      <div className="z-10 flex flex-col items-start" style={{ transform: `translateY(${offset}%)` }}>
         {dnaInfo && dnaInfo.top && (
           <StrandDescription
-            classes="-top-12"
+            classes="-top-12 group-hover/strand:opacity-100"
             descriptionText={dnaInfo.top.text}
             color={dnaInfo.top.color}
           />
         )}
-        <Image className="z-10" src={src} alt={functionalArea} />
+        <Image src={src} alt={functionalArea} />
         {dnaInfo && dnaInfo.bottom && (
           <StrandDescription
-            classes="-bottom-12"
+            classes="-bottom-12 group-hover/strand:opacity-100"
             descriptionText={dnaInfo.bottom.text}
             color={dnaInfo.bottom.color}
           />
         )}
       </div>
-      <span className="z-0 absolute mt-6 -bottom-12 font-roboto text-xs text-silver-300 tracking-tight">
+      <span
+        className="z-0 absolute mt-6 -bottom-12 font-roboto text-xs text-silver-300 tracking-tight
+          group-hover/section:opacity-0 transition-opacity"
+      >
         {functionalArea}
       </span>
     </div>
@@ -132,7 +136,7 @@ const StrandDescription: FC<StrandDescriptionProps> = (props) => {
   const { classes, descriptionText, color } = props;
 
   return (
-    <span className={`absolute font-roboto text-xs tracking-tight text-${color} ${classes}`}>
+    <span className={`absolute font-roboto text-xs tracking-tight opacity-0 transition-opacity pointer-events-none text-${color} ${classes}`}>
       {descriptionText}
     </span>
   )
