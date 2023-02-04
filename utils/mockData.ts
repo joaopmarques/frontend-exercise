@@ -12,8 +12,9 @@ import TeleHealth from "public/svg/telehealth.svg";
  */
 export const mockData = {
   hero: {
-    title: 'All apps in the world share the same DNA',
-    description: 'Think about infrastructure, notifications, social auth. There’s over 70% overlap in functionality.',
+    title: "All apps in the world share the same DNA",
+    description:
+      "Think about infrastructure, notifications, social auth. There’s over 70% overlap in functionality.",
   },
   dnaStrands: {
     data: [
@@ -22,7 +23,7 @@ export const mockData = {
         functionalArea: "CRM Tool",
         SvgEl: CrmTool,
         dnaInfo: {
-          top: { text: "User Interface", color: "orange" }
+          top: { text: "User Interface", color: "orange" },
         },
       },
       {
@@ -62,10 +63,11 @@ export const mockData = {
         functionalArea: "Carsharing",
         SvgEl: CarSharing,
       },
-    ]
+    ],
   },
   dualColumn: {
-    title: 'Don’t reinvent the wheel every time you build a new app.',
-    description: 'Instead, focus on what makes your app unique. We did the heavy lifting for you already. Just plug into our pre-made feature-suite and kickstart your project.',
+    title: "Don’t reinvent the wheel every time you build a new app.",
+    description:
+      "Instead, focus on what makes your app unique. We did the heavy lifting for you already. Just plug into our pre-made feature-suite and kickstart your project.",
   },
-}
+};
