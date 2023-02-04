@@ -1,15 +1,15 @@
-import { FC, useState, useRef, useEffect } from "react";
+import { FC, useState, useRef, useEffect, SyntheticEvent } from "react";
 import Image from "next/image";
 
 import { getScrollPercentage } from "../utils/helpers";
 
-import bookingTool from "public/svg/booking-tool.svg";
-import carSharing from "public/svg/carsharing.svg";
-import crmTool from "public/svg/crm-tool.svg";
-import foodDelivery from "public/svg/food-delivery.svg";
-import peopleOs from "public/svg/people-os.svg";
-import socialPlatform from "public/svg/social-platform.svg";
-import teleHealth from "public/svg/telehealth.svg";
+import BookingTool from "public/svg/booking-tool.svg";
+import CarSharing from "public/svg/carsharing.svg";
+import CrmTool from "public/svg/crm-tool.svg";
+import FoodDelivery from "public/svg/food-delivery.svg";
+import PeopleOs from "public/svg/people-os.svg";
+import SocialPlatform from "public/svg/social-platform.svg";
+import TeleHealth from "public/svg/telehealth.svg";
 
 interface DnaInfoProps {
   top?: { text: string, color: string };
@@ -24,7 +24,7 @@ interface StrandDescriptionProps {
 
 interface StrandProps {
   functionalArea: string;
-  src: string;
+  SvgEl: FC & { ref?: HTMLElement };
   offset?: string;
   dnaInfo?: DnaInfoProps
 }
@@ -56,10 +56,46 @@ export const DnaStrands = () => {
     /* Enable DNA interaction when scrolling animation is done */
     scrollPercentage.current > 98 ? setDnaInteraction(true) : setDnaInteraction(false);
   }
+  
+  /**
+   * Handle opacity of strand groups
+    */
+  const handleOpacity = (e: any) => {
+    const $el = e.target
+
+    /* If it's an SVG rect, get its color  */
+    if ($el && $el.nodeName && $el.nodeName === "rect") {
+      let elFill = $el.getAttribute("fill");
+      
+      console.log(elFill);
+      strandsRef?.current?.querySelectorAll("svg rect").forEach(
+        el => {
+          if (el.getAttribute("fill") !== elFill) {
+            el.setAttribute("opacity", "0.1");
+          } else {
+            el.setAttribute("opacity", "1");
+          }
+        }
+      )
+    } else {
+      strandsRef?.current?.querySelectorAll("svg rect").forEach(
+        el => {
+          el.setAttribute("opacity", "1");
+        }
+      )
+    }
+
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("mouseover", handleOpacity);
+
+    return () => {
+      strandsRef?.current?.removeEventListener("mouseover", handleOpacity);
+      window.removeEventListener("scroll", handleScroll);
+    }
+    
   }, []);
 
   return (
@@ -68,29 +104,29 @@ export const DnaStrands = () => {
         <div ref={strandsRef} className="flex justify-between items-end">
           <Strand offset='3'
           functionalArea="CRM Tool"
-          src={crmTool}
+          SvgEl={CrmTool}
           dnaInfo={{
             top: { text: "User Interface", color: "orange" }
           }} />
-          <Strand offset='-11' functionalArea="People OS" src={peopleOs} />
+          <Strand offset='-11' functionalArea="People OS" SvgEl={PeopleOs} />
           <Strand offset='24'
           functionalArea="Booking Tool"
-          src={bookingTool}
+          SvgEl={BookingTool}
           dnaInfo={{
             bottom: { text: "Infrastructure", color: "green" }
           }} />
-          <Strand offset='7' functionalArea="Telehealth" src={teleHealth} />
+          <Strand offset='7' functionalArea="Telehealth" SvgEl={TeleHealth} />
           <Strand
             offset='-10'
             functionalArea="Food Delivery"
-            src={foodDelivery}
+            SvgEl={FoodDelivery}
             dnaInfo={{
               top: { text: "Basic Features", color: "blue"},
-              bottom: { text: "3rd party stuff", color: "purple" }
+              bottom: { text: "3rd party stuff", color: "violet" }
             }}
           />
-          <Strand offset='29' functionalArea="Social Platform" src={socialPlatform} />
-          <Strand offset='-13' functionalArea="Carsharing" src={carSharing} />
+          <Strand offset='29' functionalArea="Social Platform" SvgEl={SocialPlatform} />
+          <Strand offset='-13' functionalArea="Carsharing" SvgEl={CarSharing} />
         </div>
       </section>
       {!dnaInteraction && (
@@ -101,22 +137,22 @@ export const DnaStrands = () => {
 };
 
 const Strand: FC<StrandProps> = (props) => {
-  const { functionalArea, src, offset, dnaInfo } = props;
+  const { functionalArea, SvgEl, offset, dnaInfo } = props;
 
   return (
-    <div className={`relative flex flex-col items-start group/strand`} data-offset={offset}>
+    <div className={`relative flex flex-col items-start el-strand`} data-offset={offset}>
       <div className="z-10 flex flex-col items-start" style={{ transform: `translateY(${offset}%)` }}>
         {dnaInfo && dnaInfo.top && (
           <StrandDescription
-            classes="-top-12 group-hover/strand:opacity-100"
+            classes="-top-12"
             descriptionText={dnaInfo.top.text}
             color={dnaInfo.top.color}
           />
         )}
-        <Image src={src} alt={functionalArea} />
+        <SvgEl />
         {dnaInfo && dnaInfo.bottom && (
           <StrandDescription
-            classes="-bottom-12 group-hover/strand:opacity-100"
+            classes="-bottom-12"
             descriptionText={dnaInfo.bottom.text}
             color={dnaInfo.bottom.color}
           />
