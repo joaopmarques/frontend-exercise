@@ -58,33 +58,42 @@ export const DnaStrands = () => {
   }
   
   /**
-   * Handle opacity of strand groups
-    */
+   * Save each rect's opacity into a data attribute
+   * if there's isn't an opacity attribute, it defaults to 1
+   */
+   strandsRef?.current?.querySelectorAll("svg rect").forEach(
+     (el: any) => {
+       el.dataset.opacity = el.getAttribute("opacity") ?? 1;
+     }
+   )
+
+  /**
+  * Handle opacity of strand groups on hover
+  */
   const handleOpacity = (e: any) => {
     const $el = e.target
+    let elFill: string;
 
     /* If it's an SVG rect, get its color  */
     if ($el && $el.nodeName && $el.nodeName === "rect") {
-      let elFill = $el.getAttribute("fill");
-      
-      console.log(elFill);
+      elFill = $el.getAttribute("fill");
+
       strandsRef?.current?.querySelectorAll("svg rect").forEach(
-        el => {
-          if (el.getAttribute("fill") !== elFill) {
-            el.setAttribute("opacity", "0.1");
+        (el: any) => {
+          if (el.getAttribute("fill") === elFill) {
+            el.style.opacity = el.dataset.opacity;
           } else {
-            el.setAttribute("opacity", "1");
+            el.style.opacity = el.dataset.opacity * 0.3;
           }
         }
       )
     } else {
       strandsRef?.current?.querySelectorAll("svg rect").forEach(
-        el => {
-          el.setAttribute("opacity", "1");
+        (el: any) => {
+          el.style.opacity = el.dataset.opacity;
         }
       )
     }
-
   };
 
   useEffect(() => {
@@ -172,7 +181,7 @@ const StrandDescription: FC<StrandDescriptionProps> = (props) => {
   const { classes, descriptionText, color } = props;
 
   return (
-    <span className={`absolute font-roboto text-xs tracking-tight opacity-0 transition-opacity pointer-events-none text-${color} ${classes}`}>
+    <span className={`el-strand-description__${color} absolute font-roboto text-xs tracking-tight opacity-0 transition-opacity pointer-events-none text-${color} ${classes}`}>
       {descriptionText}
     </span>
   )
