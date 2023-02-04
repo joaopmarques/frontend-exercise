@@ -29,7 +29,13 @@ interface StrandProps {
   dnaInfo?: DnaInfoProps;
 }
 
-export const DnaStrands = () => {
+interface DnaStrandsProps {
+  data: Array<StrandProps>;
+}
+
+export const DnaStrands: FC<DnaStrandsProps> = (props) => {
+  const { data } = props;
+
   const scrollPercentage = useRef<number>(0);
   const [dnaInteraction, setDnaInteraction] = useState<boolean>(false);
   const strandsRef = useRef<HTMLDivElement>(null);
@@ -130,39 +136,11 @@ export const DnaStrands = () => {
     <>
       <section className="relative container group/section">
         <div ref={strandsRef} className="flex justify-between items-end">
-          <Strand
-            offset="3"
-            functionalArea="CRM Tool"
-            SvgEl={CrmTool}
-            dnaInfo={{
-              top: { text: "User Interface", color: "orange" },
-            }}
-          />
-          <Strand offset="-11" functionalArea="People OS" SvgEl={PeopleOs} />
-          <Strand
-            offset="24"
-            functionalArea="Booking Tool"
-            SvgEl={BookingTool}
-            dnaInfo={{
-              bottom: { text: "Infrastructure", color: "green" },
-            }}
-          />
-          <Strand offset="7" functionalArea="Telehealth" SvgEl={TeleHealth} />
-          <Strand
-            offset="-10"
-            functionalArea="Food Delivery"
-            SvgEl={FoodDelivery}
-            dnaInfo={{
-              top: { text: "Basic Features", color: "blue" },
-              bottom: { text: "3rd party stuff", color: "violet" },
-            }}
-          />
-          <Strand
-            offset="29"
-            functionalArea="Social Platform"
-            SvgEl={SocialPlatform}
-          />
-          <Strand offset="-13" functionalArea="Carsharing" SvgEl={CarSharing} />
+          {data && data.length > 0 && (
+            data.map((strand: StrandProps, index: number) => {
+              return <Strand {...strand} key={`dna-strand-${index}`} />
+            })
+          )}
         </div>
       </section>
       {!dnaInteraction && (

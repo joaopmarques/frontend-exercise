@@ -1,10 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { Heading } from "../components/Heading";
+import { Hero } from "../components/Hero";
 import { Spacer } from "../components/Spacer";
 import { DnaStrands } from "../components/DnaStrands";
 import { DualColumn } from "../components/DualColumn";
+
+import { mockData } from "../utils/mockData";
 
 const Home: NextPage = () => {
   return (
@@ -15,10 +17,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex container flex-1 flex-col items-center text-center">
-        <Heading />
+        <Hero {...mockData.hero} />
         <Spacer />
-        <DnaStrands />
-        <DualColumn />
+        <DnaStrands {...mockData.dnaStrands} />
+        <DualColumn {...mockData.dualColumn} />
       </main>
     </div>
   );
