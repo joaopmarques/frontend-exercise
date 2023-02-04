@@ -58,8 +58,8 @@ export const DnaStrands = () => {
   }
   
   /**
-   * Save each rect's opacity into a data attribute
-   * if there's isn't an opacity attribute, it defaults to 1
+   * Save each rect's opacity into a data attribute.
+   * If there's isn't an opacity attribute, it defaults to 1
    */
    strandsRef?.current?.querySelectorAll("svg rect").forEach(
      (el: any) => {
@@ -73,24 +73,44 @@ export const DnaStrands = () => {
   const handleOpacity = (e: any) => {
     const $el = e.target
     let elFill: string;
+    let elColorName: string;
 
     /* If it's an SVG rect, get its color  */
     if ($el && $el.nodeName && $el.nodeName === "rect") {
       elFill = $el.getAttribute("fill");
+      elColorName = $el.classList[0].split("svg__")[1];
 
+      /**
+       * Show or hide strand descriptors if their strandColor
+       * data attribute matches the color of the hovered rect
+       * */
+      let $descriptors = document.querySelectorAll(".strand-descriptor");
+      $descriptors?.forEach((descriptor: any) => {
+        if (descriptor.dataset.strandColor === elColorName) {
+          descriptor.style.opacity = "1";
+        } else {
+          descriptor.style.opacity = "0";
+        }
+      })
+
+      /* Iterate through each rect and set a lower opacity for rects that aren't the same color  */
       strandsRef?.current?.querySelectorAll("svg rect").forEach(
-        (el: any) => {
-          if (el.getAttribute("fill") === elFill) {
-            el.style.opacity = el.dataset.opacity;
+        (rect: any) => {
+          if (rect.getAttribute("fill") === elFill) {
+            rect.style.opacity = rect.dataset.opacity;
           } else {
-            el.style.opacity = el.dataset.opacity * 0.3;
+            rect.style.opacity = rect.dataset.opacity * 0.3;
           }
         }
       )
     } else {
+      /* Reset to saved opacity value */
       strandsRef?.current?.querySelectorAll("svg rect").forEach(
-        (el: any) => {
-          el.style.opacity = el.dataset.opacity;
+        (rect: any) => {
+          rect.style.opacity = rect.dataset.opacity;
+
+          let $descriptors = document.querySelectorAll(".strand-descriptor");
+          $descriptors?.forEach((descriptor: any) => descriptor.style.opacity = "0");
         }
       )
     }
@@ -104,7 +124,6 @@ export const DnaStrands = () => {
       strandsRef?.current?.removeEventListener("mouseover", handleOpacity);
       window.removeEventListener("scroll", handleScroll);
     }
-    
   }, []);
 
   return (
@@ -181,7 +200,11 @@ const StrandDescription: FC<StrandDescriptionProps> = (props) => {
   const { classes, descriptionText, color } = props;
 
   return (
-    <span className={`el-strand-description__${color} absolute font-roboto text-xs tracking-tight opacity-0 transition-opacity pointer-events-none text-${color} ${classes}`}>
+    <span
+      data-strand-color={color}
+      className={`strand-descriptor absolute font-roboto text-xs tracking-tight transition-opacity
+        pointer-events-none text-${color} ${classes} opacity-0`}
+    >
       {descriptionText}
     </span>
   )
